@@ -1,0 +1,77 @@
+\documentclass[12pt,a4paper]{scrartcl}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{siunitx}
+\usepackage{esvect}
+\usepackage{multirow}%Tabellenzellen verbinden
+\usepackage{tabulary}%tolle Tabellen
+\usepackage{enumitem}%Aufzählungen schöner
+\usepackage{dsfont}%Zahlenmengensymbole
+\usepackage{pdfpages}
+\usepackage[left=1.5cm,right=1.5cm,top=2cm,bottom=3cm]{geometry}
+\usepackage{hyperref}
+\author{\large
+\begin{tabular}{llr}
+Malte Hamann & 6318952 &1hamann@informatik.uni-hamburg.de
+\\ Evelyn Fischer & 0000000 & 3fischer@informatik.uni-hamburg.de
+\\ Marco Jendryczko & 0000000 & 5jendryz@informatik.uni-hamburg.de
+\\ Kai Frederking & 0000000 & 1frederk@informatik.uni-hamburg.de
+\end{tabular}
+}
+\title{Übungen Vertiefung Kombinatorische Optimierung Sommersemester 2016\\\vspace{\baselineskip}\large Gruppe 2, Mo 10-12, Abgabe Blatt 01 \\Übungsleiter: \url{daniel.weissauer@uni-hamburg.de}}
+\date{\today}
+
+\newcommand{\prob}[1]{\vspace{.5\baselineskip}\begin{addmargin}[15pt]{0pt}\textbf{#1}\end{addmargin}}
+\newcommand{\ein}[1]{\vspace{.5\baselineskip}\begin{addmargin}[15pt]{0pt}\textbf{Eingabe: }#1\end{addmargin}}
+\newcommand{\fra}[1]{\vspace{.5\baselineskip}\begin{addmargin}[15pt]{0pt}\textbf{Frage: }#1\end{addmargin}}
+\newcommand{\loesung}[1]{\vspace{.5\baselineskip}\begin{addmargin}[0pt]{0pt}\textbf{Lösung: }#1\end{addmargin}}
+
+\newcommand{\pr}{$\leq_p$ }%polynomiell reduzierbar
+
+
+\begin{document}
+\maketitle
+\vspace{-\baselineskip}
+\hrule
+\vspace{\baselineskip}
+\textbf{Hausaufgaben zum 18. April 2016}
+\begin{enumerate}
+	\item
+	\begin{enumerate}
+	\item Als bekannt setzen wir voraus, dass 3D-Matching ein NP-vollständiges Problem ist. Entsprechend zu 3D-MATCHING definiert man $k$D-MATCHING für $k \geq 2$. Formulieren Sie das Problem 4D-MATCHING und zeigen Sie, dass 4D-MATCHING ein NP-vollständiges Problem ist.
+	
+	\loesung{hier dann die Antwort einfügen}
+	
+	\item Für jedes feste $k \geq 2$ definieren wir das Problem $k$-CLIQUE wie folgt:
+	\prob{k-CLIQUE}
+	\ein{Ein Graph $G = (V,E)$.}
+	\fra{Enthält $G$ einen vollständigen Graphen mit $k$ Knoten?}
+	Für welche $k\geq 2$ ist $k$-CLIQUE ein NP-vollständiges Problem?
+	
+	\textbf{Hinweis:} Zur Lösung von Aufgabe 1 reicht es natürlich nicht, Antworten ohne Begründung zu geben; es kommt darauf an, Antworten zu geben \emph{und deren Richtigkeit nachzuweisen.}
+	
+	\loesung{hier dann die Antwort einfügen}
+	\end{enumerate}
+
+\item Gegeben sei eine Menge $A = \{a_1,\ldots,a_n\}$ sowie eine Kollektion $B_1,\ldots,B_m$ von Teilmengen von $A$. Eine Menge $H \subseteq A$ wird \emph{Hitting Set} für $B_1,\ldots,B_m$ genannt, falls $H \cap B_i \neq \emptyset$ für alle $i \in \{1,\ldots,m\}$ gilt. Wir betrachten das folgende Entscheidungsproblem:
+
+	\prob{HITTING SET}
+	\ein{Eine Menge $A = \{a_1,\ldots,a_n\},$ Teilmengen $B_1,\ldots,B_m$ von $A$ sowie eine Schranke $k \in \mathds{Z}, k \geq 1$.}
+	\fra{Gibt es ein Hitting Set $H \subseteq A$ für $B_1,\ldots,B_m$, für das $|H| \leq k$ gilt?}
+	\begin{enumerate}
+	\item Beweisen Sie, dass HITTING SET ein NP-vollständiges Problem ist, indem Sie erstens nachweisen, dass HITTING SET in NP liegt, und zweitens 3-SAT zur Reduktion heranziehen.
+	
+	\loesung{hier dann die Antwort einfügen}
+	
+	\item Um die NP-Vollständigkeit von HITTING SET nachzuweisen, muss man nicht unbedingt 3-SAT verwenden. Fällt Ihnen eine andere (möglichst einfache) Reduktion eines NP-vollständigen Problems auf HITTING SET ein?
+	
+	\loesung{hier dann die Antwort einfügen}
+	\end{enumerate}
+
+\end{enumerate}
+
+\end{document}
