@@ -1,0 +1,1156 @@
+\documentclass[12pt,a4paper]{scrreprt}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{siunitx}
+\usepackage{esvect}
+\usepackage{multirow}%Tabellenzellen verbinden
+\usepackage{tabulary}%tolle Tabellen
+\usepackage{enumitem}%Aufzählungen schöner
+\usepackage{dsfont}%Zahlenmengensymbole
+\usepackage{pdfpages}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=3cm]{geometry}
+\usepackage{hyperref}
+\author{\normalsize Mitschrift von:\\ Malte Hamann\\1hamann@informatik.uni-hamburg.de}
+\title{Übungen Vertiefung kombinatorische Optimierung\\\huge Sommersemester 2016\\\vspace{2\baselineskip}\Large Übungsleiter: \url{daniel.weissauer@uni-hamburg.de}}
+\date{Stand: \today}
+
+\newcommand{\prob}[1]{\vspace{.5\baselineskip}\begin{addmargin}[15pt]{0pt}\textbf{#1}\end{addmargin}}
+\newcommand{\ein}[1]{\vspace{.5\baselineskip}\begin{addmargin}[15pt]{0pt}\textbf{Eingabe: }#1\end{addmargin}}
+\newcommand{\fra}[1]{\vspace{.5\baselineskip}\begin{addmargin}[15pt]{0pt}\textbf{Frage: }#1\end{addmargin}}
+\newcommand{\loesung}[1]{\vspace{.5\baselineskip}\begin{addmargin}[0pt]{0pt}\textbf{Lösung: }#1\end{addmargin}}
+
+\newcommand{\pr}{$\leq_p$ }%polynomiell reduzierbar
+
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+
+\chapter{Blatt 1}
+
+Einführung zur Polynomialhierarchie, dass SAT NP-vollständig ist und kurze Erläuterung, dass wir meist davon ausgehen, dass P = NP nicht gilt.
+
+\section*{A: Präsenzaufgaben am 11. April 2016}
+
+\begin{enumerate}
+\item Wir betrachten das folgende Entscheidungsproblem:
+
+	\prob{INTERVAL SCHEDULING}
+
+	\ein{Eine Menge von reellen Intervallen $[a_i, b_i]$ mit $a_i < b_i (i=1,\ldots,n)$ sowie eine Schranke $k \in \mathds{Z}, k \geq 1$.}
+
+	\fra{Enthält diese Menge eine Teilmenge von $k$ Intervallen, die sich paarweise nicht überlappen? (Erklärung: Zwei Intervalle überlappen sich, wenn sie mehr als nur einen Punkt gemeinsam haben.)}
+
+\item[] Für die beiden nachfolgenden Fragen gibt es jeweils drei Antwortmöglichkeiten:
+\begin{enumerate}
+	\item[(i)] Ja,
+	\item[(ii)] Nein,
+	\item[(iii)] Unbekannt, da man nicht weiß, ob P $\neq$ NP oder P $=$ NP gilt.
+\end{enumerate}
+
+Geben Sie kurze Erklärungen für Ihre Antworten!
+\begin{enumerate}
+	\item Gilt INTERVAL SCHEDULING \pr VERTEX COVER?
+	\item Gilt INDEPENDENT SET \pr INTERVAL SCHEDULING?
+\end{enumerate}
+
+\item[]\loesung{
+$I_1,\ldots, I_n \subseteq \mathds{R}$ und $I_x = [a_i,b_i]$. Außerdem Schranke $k \in \mathds{Z}, k \geq 1$.
+\begin{enumerate}
+	\item ja, INTERVAL SCHEDULING \pr INDEPENDENT SET \pr VERTEX COVER
+	gegeben: $I_1,\ldots, I_n$. Konstruiere G mit Eckenmenge $[n]$ und Kante $i-j$, wenn $|I_i \cap I_j| > 1$, $[[\ ]]$
+	Anmerkung: Wenn wir ein Orakel für VERTEX COVER haben, dann kann auch INTERVAL SCHEDULING entsprechend gelöst werden.
+	\item $\big[\ [\ \big]\big[\ ][\ ]\big]$ $\rightarrow$ Greedy-Algorithmus, erstes Intervall nehmen und alle in Konflikt stehenden streichen.
+	
+	$\ast$ INTERVAL SCHEDULING $\in$ P: Greedy-Verfahren!
+	
+	- falls ja, dann P = NP! (da INDEP.SET NP-schwer ist)
+	
+	- falls P = NP, dann INDEP.SET $\in$ P, also \textbf{ja}.
+\end{enumerate}
+
+}
+
+\item Wir betrachten das folgende Entscheidungsproblem:
+
+\prob{SET PACKING}
+
+\ein{Eine Familie $S_i (i = 1 , \ldots, n)$ von endlichen Mengen sowie eine Schranke $k \in \mathds{Z}, k\geq 1$.}
+
+\fra{Gibt es unter den Mengen $S_i$ eine Kollektion von $k$ Mengen, die paarweise disjunkt sind?}
+
+\item[] Klären Sie wie in 1., ob (i), (ii) oder (iii) zutrifft:
+
+\begin{enumerate}
+	\item Gilt SET PACKING \pr VERTEX COVER?
+	\item Gilt INDEPENDENT SET \pr SET PACKING?
+\end{enumerate}
+
+\item[]\loesung{}
+
+\item Zunächst eine Definition: Für einen Graphen $G = (V,E)$ sei $D \subseteq V$. Man nennt $D$ eine \emph{dominierende Menge} von $G$, falls für jeden Knoten $v \in V$ gilt: Der Knoten $v$ liegt in $D$ oder $v$ hat einen Nachbarn in $D$. Wir betrachten das folgende Entscheidungsproblem:
+
+\prob{DOMINIERENDE MENGE}
+
+\ein{Ein Graph $G = (V, E)$ sowie eine Schranke $k \in \mathds{Z}, k \geq 1$.}
+
+\fra{Besitzt $G$ eine dominierende Menge $D$ mit $|D| \leq k$?}
+
+\item[] Zeigen Sie, dass DOMINIERENDE MENGE ein NP-vollständiges Problem ist!
+
+\textbf{Hinweis:} Zunächst ist zu zeigen, dass DOMINIERENDE MENGE in NP liegt. Sodann - dies ist die Hauptaufgabe - ist eine geeignete Reduzierung vorzunehmen. Tipp: Versuchen Sie es mit SET COVER
+
+\item Eine Bemerkung zu 3D-MATCHING:
+
+\begin{addmargin}[30pt]{0pt}3D-MATCHING zeichnet sich dadurch aus, dass man es sowohl als einen Spezialfall von SET COVER als auch von SET PACKING auffassen kann.\end{addmargin}
+
+Erläutern Sie diese Bemerkung!
+
+\item Als bekannt setzen wir voraus, dass 3D-COLORING ein NP-vollständiges Problem ist. Entsprechend zu 3-COLORING definiert man $k$-COLORING für $k \in \{1,2,\ldots\}.$ Für welche $k$ ist $k$-COLORING ein NP-vollständiges Problem?
+ 
+
+
+\end{enumerate}
+
+\section*{B: Hausaufgaben zum 18. April 2016}
+
+\begin{enumerate}
+	\item Als bekannt setzen wir voraus, dass 3D-Matching ein NP-vollständiges Problem ist. Entsprechend zu 3D-MATCHING definiert man $k$D-MATCHING für $k \geq 2$. Formulieren
+\end{enumerate}
+
+%\chapter{1. Termin 17.04.15}
+%
+%\section{Grundbegriffe und Formeln}
+%
+%\subsection{Newtonsches Gravitationsgesetz}
+%Zwei beliebige Körper üben aufgrund ihrer Massen m und M anziehende, betragsgleiche Kräfte  $|F_{21}| = |F_{12}|$ aufeinander aus. Diese heißen Gravitationskräfte.
+%Die Richtung dieser Kräfte läuft auf der Verbindungslinie der beiden Massenschwerpunkte und ist nach dem 3. Newtonschen Axiom (Wechselwikungsgesetz) entgegengesetzt.
+%Der Betrag der kraft ist proportional zu den beiden Massen und anti-prop. zum Quadrat des Abstandes der Massenschwerpunkte $r$.
+%
+%\begin{equation}
+%F = G\ \frac{m \cdot M}{r^2}
+%\end{equation}
+%$G$ ist die Proportionalitätskonstante $G = \SI{6.637d-11}{\cubic\metre\per\kilogram\per\square\second}$
+%
+%Das Gravitationsgesetz gilt nur für punktförmige Massen, kann aber auf ausgedehnte Körper übertragen werden, wenn ihre Größen vernachlässigbar gegenüber dem Abstand sind.
+%
+%\paragraph{Übersprungene Themen}
+%\begin{itemize}
+%	\item Kinetische Energie
+%	\item Potenzielle Energie
+%	\item Energie vs. Arbeit
+%\end{itemize}
+%
+%
+%\subsection{Konservative Kräfte}
+%\begin{description}
+%	\item[mathematische Def.:] Eine Kraft ist dann konservativ, wenn sich das zugehörige Kraftfeld als Gradient eines Skalarfeldes darstellen lässt.
+%	\item[phys. Def.:] - Kraft ist dann konservativ, wenn die durch sie verrichtete Arbeit vom Weg unabhängig ist. Die Arbeit hängt nur von Start- und Endpunkt der Bewegung ab. (Gegenbeispiel: Reibung dissipativ)
+%	\item[phys. Def. 2:] - Probekörper erfahren längs eines in sich geschlossenen Weges weder Energiegewinn noch -verlust.
+%	\item[Beispiel] Einen Berg runter und wieder hoch laufen oder egal ob man den Berg direkt oder in Serpentinen hoch läuft braucht man dieselbe Energie / muss dieselbe Gravitationskraft überwinden.
+%\end{description}
+%
+%\subsection{Gradient}
+%Eine Kraft z.B. die Erdanziehung nimmt mit der Entfernung ab. Für die Erdanziehung gilt der Faktor $\dfrac{1}{r^2}$.
+%
+%\subsection{Hubarbeit}
+%Bei Arbeit im Schwerefeld gilt für die homogene Hubarbeit $ W = m \cdot g \cdot h$.
+%
+%Bei großen Strecken kann die Hubarbeit nicht mehr homogen sein. Hier benötigt man die allgemeine Definition der Arbeit:
+%\begin{align}
+%W &= \int_{S_1}^{S_2} F\;\mathrm{d}s\\
+%  &= \int_{r_1}^{r_2} F\;\mathrm{d}r\\
+%  &= \int_{r_1}^{r_2} G\;\frac{m M}{r^2} \mathrm{d}r\\
+%  &= G m M \left[-\frac{1}{r}\right]_{r_1}^{r_2}\\
+%  &= G m M \left(- \frac{1}{r_2} + \frac{1}{r_1}\right)
+%\end{align}
+%
+%\subsection{Kosmische Geschwindigkeiten}
+%1. Ein Geschoss, das mit der ersten kosmischen Geschwindigkeit abgeschossen wird, umrundet die Erde 
+%\begin{align}
+%	 \rightarrow v_1 = \sqrt{g \cdot r_E}\quad(r_E = \mathrm{Erdradius})
+%\end{align}
+%
+%2. Ein Geschoss, das unter einem beliebigen Winkel zur Erdoberfläche mit der zweiten kosmischen Geschwindigkeit abgeschossen wird, verlässt den Einfluss der Erdanziehung mit der Geschwindigkeit:
+%\begin{align}
+%v_2 = \sqrt{2 \cdot g \cdot r_E}
+%\end{align}
+%
+%\section{Übungsaufaben}
+%
+%\subsection{1.3 Satellitenbahn}
+%Ein Satellit umkreist in einer Höhe von $h=310\;\mathrm{km}$ die Erde und hat eine Periode von $T = 91\;\mathrm{min}$. Wie groß ist die Masse $m_E$ der Erde?
+%Es gilt:
+%\begin{align}
+%m_E &= \frac{4 \pi^2\,r^3}{G_E\,T^2}\\
+%\text{mit } G_E &= 6,6726 \cdot 10^{-11}\;\dfrac{\mathrm{m}^3}{\mathrm{kg}\cdot\mathrm{s}^2}
+%\end{align}
+%
+%\paragraph{Lösung:}
+%\begin{align}
+%	r = r_E + h = 6680\;\mathrm{km}
+%\end{align}
+%Einsetzen, kürzen und ausrechnen ergibt:
+%\begin{align}
+%	m_E \approx 5,91574 \cdot 10^{24}\;\mathrm{kg}
+%\end{align}
+%
+%In welcher Höhe $h$ über der Erdoberfläche muss ein Satellit kreisen, damit seine Bahn geostationär ist? Die Umlaufdauer beträgt einen Sterntag = 0,99727 Sonnentage = $86149\;\mathrm{s}$.
+%
+%\paragraph{Lösung:}
+%\begin{align}
+%\intertext{$m_E$ nach $r$ umstellen und beachten, dass $h = r - 6370$ gilt.}
+%r &= 42017\;\mathrm{km}\\
+%\intertext{einsetzen:}
+%h &= r - 6370\;\mathrm{km}\\
+%&= 35647\;\mathrm{km}
+%\end{align}
+%
+%Wie schnell muss ein Satellit sein, um die Erde an der Erdoberfläche zu umkreisen (Luftwiderstand wird vernachlässigt) ?
+%
+%\paragraph{Lösung:}
+%\begin{align}
+%\omega &= v \cdot r\\
+%\dfrac{2\pi}{T} &= v \cdot r\\
+%T &= \dfrac{2 \pi r}{v}\\
+%\intertext{in $m_E$ einsetzen:}
+%m_E &= \dfrac{4 \pi^2 r^3}{G_E \cdot \left(\frac{2 \pi r}{v}\right)^2}\\
+%v &= \sqrt{\dfrac{m_E \cdot G_E}{r}}
+%\end{align}
+%
+%
+%\subsection{1.5 Erde und Mond}
+%Wie weit ist der Schwerpunkt des Erde-Mond Systems im Mittel vom Mittelpunkt der Erde entfernt?
+%Annm: Erde beweget sich auf Kreisbahn um diesen Schwerpunkt. Es gilt für den Mittelpunkt der Erde: $F_G = F_Z$ 
+%Außerdem gegeben:
+%\begin{align}
+%	M_{Mond} &= 7,35 \cdot 10^{22}\;\mathrm{kg}\\
+%	r_{Erde-Mond} &= 384400\;\mathrm{km}\\
+%	T_{Erde-Mond} &= 28,32158\;\mathrm{d}
+%\end{align}
+%
+%\paragraph{Lösungsansatz:}
+%\begin{align}
+%F_G &= F_Z\\
+%\frac{m_1 \cdot m_2}{r^2} &= \omega^2 m r
+%\end{align}
+%Lösung: ca. 5km
+%
+%\chapter{2. Termin 24.04.15}
+%
+%\section{Begriffe und Formeln}
+%
+%\subsection{Skalarfeld der Erde}
+%
+%Jedem Punkt auf der Erde wird ein bestimmter Wert zugeordnet, wie zum Beispiel die Temperatur oder ähnliches.
+%
+%\subsection{Koordinatensysteme}
+%
+%\subsubsection{kartesisch}
+%x-Achse, y-Achse und Punkte mit x-Wert und y-Wert
+%
+%\subsubsection{Polarkoordinaten}
+%ebenfalls x-Achse und y-Achse
+%außerdem Entfernung des Punktes vom Ursprung $r$ und dem Winkel $\varphi$ zur x-Achse.
+%\begin{align}
+%x &= r \cdot \cos \varphi\\
+%y &= r \cdot \sin \varphi
+%\end{align}
+%
+%\paragraph{Jacobi-Determinante}
+%\label{Jacobi}
+%\begin{align}
+%\det J &= \begin{vmatrix}
+%\dfrac{\mathrm{d} (x,y)}{\mathrm{d}(r, \varphi)}
+%\end{vmatrix}\\
+%& = \begin{vmatrix}
+%\dfrac{\mathrm{d}x}{\mathrm{d}r} & \dfrac{\mathrm{d}x}{\mathrm{d}\varphi}\vspace{5pt}\\
+%\dfrac{\mathrm{d}y}{\mathrm{d}r} & \dfrac{\mathrm{d}y}{\mathrm{d}\varphi}
+%\end{vmatrix}\\
+%&= \begin{vmatrix}
+%\cos \varphi & -r \sin\varphi\\
+%\sin \varphi & r \cos \varphi
+%\end{vmatrix}\\
+%&= \cos \varphi \cdot r \cos \varphi - \sin \varphi \cdot -r \sin \varphi\\
+%&= r \cos^2 \varphi + r \sin^2 \varphi\\
+%&= r
+%\end{align}
+%
+%\subsubsection{zylindrische Koordinaten}
+%\begin{align}
+%x &= r \cdot \cos \varphi\\
+%y &= r \cdot \sin \varphi\\
+%z &= Z
+%\end{align}
+%
+%\paragraph{Jacobi-Determinante}
+%\begin{align}
+%\det J &= \begin{vmatrix}
+%\cos \varphi & -r \sin\varphi & 0\\
+%\sin \varphi & r \cos \varphi & 0\\
+%0 & 0 & 1
+%\end{vmatrix}\\
+%&= r
+%\end{align}
+%
+%\subsubsection{Kugelkoordinaten}
+%\begin{align}
+%x &= r \sin \theta \cos \varphi\\
+%y &= r \sin \theta \sin \varphi\\
+%z &= r \cos \theta
+%\end{align}
+%
+%\paragraph{Jacobi-Determinante}
+%\begin{align}
+%\det J = r^2 \sin \theta
+%\end{align}
+%Berechnung siehe Abschnitt \ref{JacobiKugel}
+%
+%\subsection{Radioaktiver Zerfall}
+%N : Atome\\
+%$\lambda$ : Zerfallskonstante Einheit $\mathrm{s}^{-1}$
+%\begin{align}
+%\frac{\mathrm{d}}{\mathrm{d}t} N &= -\lambda N\\
+%\intertext{Differentialgleichung 1. Ordnung, einmal nach der Zeit ableiten}
+%N &= N_0 \cdot e^{-\lambda t}\\
+%\ln(N) &= \ln\left(N_0 \cdot e^{-\lambda t}\right)\\
+%&= \ln\left(N_0\right) + \ln\left(e^{-\lambda t}\right)\\
+%\ln(N)-\ln(N_0) &= -\lambda t\\
+%\frac{\ln(N_0)-\ln(N)}{\lambda} &= t
+%\end{align}
+%
+%238U (Mutter) $\rightarrow$ 234Th (Tochter), $N_M N_T$
+%\begin{align}
+%N_T &= N_0-N_M\\
+%&= N_0 - N_0 e^{-\lambda t}\\
+%&= N_0 \cdot \left(1-e^{-\lambda t}\right) \text{\hspace{14mm} I}\\
+%\frac{N_T}{N_M} &=\frac{N_0}{N_M} -1\\
+%&= \frac{N_0}{N_M} \left(1-e^{-\lambda t}\right)\\
+%N_M &= N_0 - N_0 \cdot \left(1-e^{-\lambda t}\right)\\
+%&= N_0 - N_0 + N_0 \cdot e^{-\lambda t}\\
+%\frac{N_M}{N_0} &= e^{-\lambda t} \rightarrow \frac{N_0}{N_m} = e^{\lambda t} \text{\hspace{10mm} II}\\
+%\frac{N_T}{N_M} &= \left(1-e^{-\lambda t}\right) e^{\lambda t}\\
+%&= e^{\lambda t} -1\\
+%t &= \frac{1}{\lambda} \ln \left(\frac{N_T}{N_M}+1\right)
+%\end{align}
+%\paragraph{Halbwertszeit}
+%\begin{align}
+%N &= \frac{N_0}{2}\\
+%&= N_0 \cdot e^{-\lambda \tau_ {1/2}}\\
+%\intertext{durch $N_0$ teilen}
+%\ln(1) - \ln(2) &= -\lambda \tau_{1/2}\\
+%\tau_{1/2} = \frac{\ln(2)}{\lambda}
+%\end{align}
+%
+%\subsection{mathematisches Pendel}
+%
+%\begin{align}
+%s &= l \varphi\\
+%F_r &= -mg \cdot \sin \varphi\\
+%F &= m \cdot a\\
+%\intertext{Mit $F = F_r$ ergibt sich:}
+%m \cdot s'' &= -mg \cdot \sin \varphi\\
+%s'' + g \sin \varphi &= 0\\
+%s'' &= \frac{\mathrm{d}^2}{\mathrm{d}t^2}(l \varphi)\\
+%&= l \varphi''
+%\intertext{Wenn der Auslenkwinkel sehr klein wird gilt $\sin\varphi \rightarrow \varphi$}
+%\varphi'' + \frac{g}{l} \varphi &= 0\\
+%\intertext{ Durch $ \omega^2 = \dfrac{g}{l}$ und $\varphi = A \cos(\omega t) + B \sin (\omega t)$ ergibt sich:}
+%T &= \frac{2\pi}{\omega}\\
+%&= 2 \pi \sqrt{\frac{l}{g}}
+%\end{align}
+%
+%\section{Übungsaufgaben}
+%
+%\subsection{Impakt eines Meteorit}
+%Konstanten:
+%\begin{align}
+%r_E &= 6371\;\mathrm{km}\\
+%G_E &= 6,6726 + 10^{-11} \frac{\mathrm{m}^3}{\mathrm{kg}\cdot\mathrm{s}^2}\\
+%m_E &= 5,9737 \cdot 10^{24}\;\mathrm{kg}
+%\end{align}
+%\begin{align}
+%Q_b = -G_E \frac{m_E \cdot m}{r}
+%\end{align}
+%Annahme am Anfang: Meteorit ist unendlich weit entfernt, r sei unendlich.
+%\subsubsection{1) Wie groß ist mindestens die Geschwindigkeit, mit der ein Meteorit auf der Erde aufschlägt?}
+%\paragraph{Lösung:}
+%Annahme: Die potenzielle Energie des Meteoriten wird vollständig in $E_{kin}$ umgewandelt.
+%\begin{align}
+%G_E \frac{m_E \cdot m}{r} &= \frac{1}{2} mv^2
+%\intertext{ergibt nach Umformen:}
+%v &= \sqrt{\dfrac{2g \cdot M_E}{r}}
+%\end{align}
+%Wert ca. $11000\;\frac{\mathrm{km}}{h}$
+%\subsubsection{2) Wie groß ist die Fluchtgeschwindigkeit, mit der man das Gravitationsfeld der Erde verlassen kann?}
+%\paragraph{Lösung:} Die Fluchtgeschwindigkeit ist genauso groß wie die in 1) berechnete Geschwindigkeit.
+%\subsubsection{3) Welche Effekte haben eine Einfluss auf die Aufschlaggeschwindigkeit?}
+%\paragraph{Lösung:} Sämtliche Formen von Reibung.
+%
+%
+%\subsection{Zerfall - Alter von Gesteinen}
+%Wie alt ist ein Gestein mit folgenden gegebenen Werten?
+%\begin{align}
+%\frac{N_{Sr}}{N_{Rb}} &= 0,035 \pm 0,005\\
+%\frac{N_T}{N_M} &= e^{\lambda t} -1\\
+%\tau_{{1/2}_{Rb}} = \frac{ln(2)}{\lambda_r} &= 48,6 \cdot 10^9\;\mathrm{a}
+%\end{align}
+%
+%\paragraph{Lösung:}
+%\begin{align}
+%\tau_{{1/2}_{Rb}} &= 15326496 \cdot 10^{11}\;\mathrm{s}\\
+%t &= \dfrac{\ln\left(\dfrac{N_T}{N_M}+1\right)}{\lambda}\\
+%&= 2,4 \cdot 10^9\;\mathrm{a}
+%\end{align}
+%
+%\chapter{3.Termin 08.05.15}
+%
+%\section{Begriffe und Formeln}
+%
+%\subsection{Erklärungen zu Wellen}
+%
+%\begin{tabular}{lll}
+%\textbf{Raumwellen}& & \textbf{Oberflächenwellen}\\
+%S-Wellen & Sekundärwellen, auch Scherwellen & Love-Welle\\
+%P-wellen & Primärwellen& Raleigh-Welle\\
+%\end{tabular}
+%\vspace{\baselineskip}
+%
+%P-Wellen stauchen das Material, S-Wellen verschieben das Material horizontal. Wellen durch die Erde gehen bewegen sich auf Bogenbahnen aufgrund von Brechung an Dichtegrenzen.
+%
+%Erklärung der Love-Welle mit einem Quader. An der Oberfläche sind große Schwingungen hin und her, die mit zunehmender Tiefe Abnehmen.
+%
+%Rayleigh-Welle ist vertikal, hebt und senkt die Oberfläche und rotiert dabei in sich noch.
+%
+%Beispiel Nepal: Alle Wellen wurden erzeugt, eintreffen tun dann zuerst P-wellen dann S-Wellen, dann Love-Wellen und dann Raleigh-Wellen.
+%
+%\paragraph{Snelljes Gesetz} zur Reflexion bei auftreffen auf eine Grenzschicht, Diskussion über kritischen Winkel ab welchem die Welle nur reflektiert oder nur transmittiert wird.
+%
+%\paragraph{Erzeugung von Wellen}
+%\begin{itemize}
+%	\item Mintrop Kugel, 4t schwere Kugel, die fallen gelassen wird
+%	\item Explosionen, heutzutage nicht mehr erlaubt
+%	\item Vibratoren, vor allem in der Stadt
+%\end{itemize}
+%
+%\paragraph{Seismograph und Eigenschwingung}
+%Dämpfung, damit nicht die Eigenfrequenz angeregt wird und damit der Seismograph nicht zu lange nachschwingt. Skalierungsfaktor 0,7 ist optimal.
+%
+%\subsection{Wiederholung zu Jacobi-Determinante und Kugelkoordinaten}
+%\label{JacobiKugel}
+%Siehe auch in einfacher Version Kapitel \ref{Jacobi}. Hier mit der genauen Berechnung für Kugelkoordinaten.
+%
+%\paragraph{Transformationssatz}
+%\begin{align}
+%\text{Polarkoordinaten }  \det J &= r\\
+%\text{Zylindrische Koordinaten }  \det J &=r\\
+%\text{Kugelkoordinaten }  \det J &= r^2 \sin\theta
+%\end{align}
+%
+%\paragraph{Polarkoordinaten}
+%\begin{align}
+%x &= r \cos \varphi\\
+%y &= r \sin \varphi
+%\end{align}
+%
+%\paragraph{Zylindrische Koordinaten}
+%\begin{align}
+%x &= r \cos \varphi\\
+%y &= r \sin \varphi\\
+%z &= z
+%\end{align}
+%
+%
+%\paragraph{Kugelkoordinaten}
+%\begin{align}
+%x &= r \sin \theta \cos \varphi\\
+%y &= r \sin \theta \sin \varphi\\
+%z &= r \cos \theta
+%\end{align}
+%
+%\paragraph{Jacobi-Determinante}
+%\begin{align}
+%\det J &= \det \frac{\,\mathrm{d} (x,y,z)}{\,\mathrm{d} (r, \theta, \varphi)}\\
+%&= \begin{vmatrix}
+%\dfrac{\mathrm{d}x}{\mathrm{d}r} & \dfrac{\mathrm{d}x}{\mathrm{d}\theta} & \dfrac{\mathrm{d}x}{\mathrm{d}\varphi}\vspace{5pt}\\
+%\dfrac{\mathrm{d}y}{\mathrm{d}r} & \dfrac{\mathrm{d}y}{\mathrm{d}\theta} & \dfrac{\mathrm{d}y}{\mathrm{d}\varphi}\vspace{5pt}\\
+%\dfrac{\mathrm{d}z}{\mathrm{d}r} & \dfrac{\mathrm{d}z}{\mathrm{d}\theta} & \dfrac{\mathrm{d}z}{\mathrm{d}\varphi}\\
+%\end{vmatrix}\\
+%&= \begin{vmatrix}
+%\sin \theta \cos \varphi & r \cos \theta \cos \varphi & -r \sin \theta \sin \varphi\\
+%\sin \theta \sin \varphi & r \cos \theta \sin \varphi & r \sin \theta \cos \varphi\\
+%\cos \theta & -r \sin \theta & 0
+%\end{vmatrix}\\
+%\begin{split}
+%&= (\sin \theta \cos \varphi) \cdot (r \cos \theta \sin \varphi) \cdot 0
+%\\&\hspace{5mm}+(r \cos \theta \cos \varphi) \cdot (r \sin \theta \cos \varphi) \cdot \cos \theta
+%\\&\hspace{5mm}+ (-r \sin \theta \sin \varphi) \cdot (\sin \theta \sin \varphi) \cdot (-r \sin \theta)
+%\\&\hspace{5mm}- (-r \sin \theta \sin \varphi) \cdot (r \cos \theta \sin \varphi) \cdot \cos \theta
+%\\&\hspace{5mm}- (r \cos \theta \cos \varphi) \cdot (\sin \theta \sin \varphi) \cdot 0
+%\\&\hspace{5mm}- (\sin \theta \cos \varphi) \cdot (r \sin \theta \cos \varphi) \cdot (-r \sin \theta)
+%\end{split}\\
+%&= r^2 \sin \theta \cos^2 \theta \cos^2 \varphi + r^2 \sin^3 \theta \sin^2 \varphi + r^2 \sin^3 \theta \cos^2 \varphi + r^2 \sin \theta \cos^2 \theta \sin^2 \varphi\\
+%&= r^2 \sin \theta
+%\end{align}
+%
+%
+%
+%\subsection{Anwendung in der Klausur}
+%Vermutlich aber erst in höheren Semestern!
+%\begin{align}
+%\int \int \int (x,y,z)\,\mathrm{d}x\,\mathrm{d}y\,\mathrm{d}z\\
+%\Rightarrow \int_{-2\pi}^{2\pi} \int_{-\pi}^{\pi} \int_0^r (x,y,z) \cdot \det \frac{\,\mathrm{d} (x,y,z)}{\,\mathrm{d} (r, \theta, \varphi)}\,\mathrm{d}r\,\mathrm{d}\theta\,\mathrm{d}\varphi
+%\end{align}
+%
+%\chapter{4. Termin 15.05.15}
+%
+%\section{Begriffe und Formeln}
+%
+%\subsection{Relevanz von CMP CDP etc.}
+%
+%Zumindest in der Klausur skizzieren können was Common Midpoint ist sollte man durchaus können.
+%
+%\subsection{Geschwindigkeit von Wellen}
+%
+%Die Geschwindigkeit einer Welle hängt vor allem von der Dichte des Materials ab. Bei Übergang der Welle zu einer größeren Dichte nimmt die Geschwindigkeit zu.
+%
+%\subsection{Snellius}
+%\begin{align}
+%\frac{\sin \rho_1}{v_1} &= \frac{\sin \rho_2}{v_2}
+%\end{align}
+%
+%\subsection{Frequenz zu Stärke eines Bebens}
+%Je tiefer die Frequenz, desto größer ist das Amplitudenmaximum der Reflexion.
+%
+%\subsection{Entfernungsberechnung des Erdbebens}
+%Durch den Laufzeitunterschied zwischen P- und S- Wellen kann man die Entfernung vom Erdbeben berechnen. Mit dem Einsatz mehrerer Messtationen dann auch per Schnittpunkt der Radien den genauen Ort.
+%
+%\subsection{Umwandlung von Wellen}
+%Eine P-Welle kann bei der Reflexion sowohl zu P-Wellen als auch zu S-Wellen umgewandelt werden. Selbiges gilt für die Transmission von P-Wellen. Entsprechend können auch S-Wellen jeweils bei beiden Vorgängen in beide Wellentypen umgewandelt werden. In flüssigen Teilen der Erde breiten sich keine S-Wellen aus, können aber beim Übergang in feste Teile wieder aus P-Wellen entstehen.
+%
+%\subsection{Schattenzone}
+%\label{Schattenzone}
+%Es kann Bereiche geben, bei denen von einem Beben keine S-Wellen registriert werden, z.B. der äußere Erdkern oder manche Punkte an der Erdoberfläche. Trotzdem kommen aber noch Oberflächenwellen an.
+%
+%\subsection{Reflexionsseismik}
+%Messung von Geschwindigkeiten und Dichten im Untergrund. Ziel dabei ist es Grenzflächen, Antiklinalstrukturen und Diskordanzen zu erkennen.
+%
+%Migration der \glqq Bögen\grqq\ mit Berechnung durch Computerprogramm. Erläuterungen zur \glqq Krawattenstruktur\grqq bei nicht migrierten Seismogrammen.
+%
+%\subsection{Impedanz}
+%\begin{align}
+%I &= \rho v
+%\end{align}
+%Wenn der Kontrast zwischen zwei Schichten groß ist nimmt auch die Amplitude stark zu.
+%
+%\subsection{Rauschen in Seismogrammen}
+%Mögliche Lösungen um Rauschen wie Verkehr und so zu entfernen:
+%\begin{enumerate}
+%\item Quelle mehrmals hintereinander zünden\\
+%	$\rightarrow$ Signal überlagert (gestapelt)\\
+%	$\rightarrow$ Rauschsignale im Vergleich zur Signalstärke abgeschwächt
+%\item Geophongruppen
+%\item Stapelverfahren: Aufzeichnung bei Bewegung der Quelle (und Geophone)
+%\end{enumerate}
+%
+%\subsection{Aussehen von Wellen}
+%TWT: Two-Way-Time
+%
+%$\rightarrow$ Diagramm auf Zettel
+%
+%\subsection{Refraktionsseismik}
+%\begin{itemize}
+%\item refraktierte Wellen treten in einiger Entfernung zur Quelle auf.
+%\item Wellengeschwindigkeiten unter Schichtgrenzen können abgeleitet werden.
+%\item Anwendung:
+%	\begin{itemize}
+%		\item bis 50m Tiefe
+%		\item sprengseismische Erforschung des Gesamtaufbaus Kruste und oberer Mantel
+%	\end{itemize}	  
+%\end{itemize}
+%Diagramme 2 und 3 auf Zettel
+%
+%\begin{itemize}
+%	\item Ist der Einfallswinkel größer als der kritische Winkel, findet keine Reflexion, sondern nur noch Transmission statt. 
+%	\item Am kritischen Winkel herrscht Totalreflexion.
+%	\item $\varphi*$: Brechungswinkel 90$^\circ$
+%\end{itemize}
+%\begin{align}
+%x^* &= \dfrac{2 h v_1}{\sqrt{{v_2}^2-{v_1}^2}}
+%\end{align}
+%
+%\section{Übungaufgaben}
+%
+%\subsection{2.1 Tripelpunkt}
+%Wird nächste Woche besprochen.
+%
+%$\rightarrow$ Siehe Abschnitte \ref{Tripel1} und \ref{Tripel2}.
+%
+%\subsection{1.5 Erde und Mond}
+%Wie weit ist der Schwerpunkt des Erde-Mond Systems im Mittel vom Mittelpunkt der Erde entfernt?
+%Annm: Erde beweget sich auf Kreisbahn um diesen Schwerpunkt. Es gilt für den Mittelpunkt der Erde: $F_G = F_Z$ 
+%Außerdem gegeben:
+%\begin{align}
+%	m_{Mond} &= 7,35 \cdot 10^{22}\;\mathrm{kg}\\
+%	m_{Erde} &= 5,916 \cdot 10^{24}\;\mathrm{kg}\\
+%	r_{Erde-Mond} &= 384400\;\mathrm{km}\\
+%	T_{Erde-Mond} &= 28,32158\;\mathrm{d}
+%\end{align}
+%
+%\paragraph{Lösungsansatz:}
+%\begin{align}
+%F_G &= F_Z\\
+%\frac{m_1 \cdot m_2}{r^2} &= \omega^2 m r
+%\end{align}
+%\paragraph{Lösung:}
+%\begin{align}
+%G_E \dfrac{m_E \cdot m_M}{r^2} &= (m_E + m_M) \cdot r_s \left(\dfrac{2\pi}{T}\right)^2\\
+%r_S &= \dfrac{G_E T^2}{4\pi^2r^2}\hspace{2mm}\dfrac{m_E \cdot m_M}{m_E + m_M}\\
+%r_S &= 4872 \mathrm{km}
+%\end{align}
+%Lösung: ca. 5km
+%
+%\chapter{5. Termin 22.05.15}
+%
+%\section{Begriffe und Formeln}
+%
+%\subsection{Schattenzone}
+%Siehe auch \ref{Schattenzone}. Bereich an der Erdoberfläche, in dem keine \emph{direkten} P-Wellen registriert werden können. Dies liegt daran, dass durch den Übergang zum Erdkern Wellen gebeugt werden und ein Bereich bei um die $140^\circ$ entsteht, wo keine Wellen ankommen. Indirekte können aber trotzdem noch ankommen.
+%
+%\subsection{Tripelpunkte}\label{Tripel1}
+%
+%\begin{itemize}
+%	\item divergent: Platten driften auseinander, Pfeile die von einander weg zeigen. (Ridges)
+%	\item konvergent B dreiecksmuster A heißt B wird unter A subduziert (Trenches)
+%	\item Transformstörung: Platten die aneinander vorbeidriften, mit Halbpfeilen in entgegengesetzten Richtungen (Faults)
+%\end{itemize}
+%
+%Geometrisches Verfahren wie in der Vorlesung, stabil, wenn sich die gestrichelten Linien in einem Punkt treffen.
+%
+%\subsection{Geoid}
+%Die Erde ist keine perfekte Kugel, wir machen uns ein Referenz - Ellipsoid mit:
+%\begin{align}
+%r_a &= 6378160\mathrm{m}\text{ Äquator}\\
+%r_c &= 6356755\mathrm{m}\text{ Polradius}\\
+%f_{\mathrm{Abplattung}} &= \dfrac{r_a - r_c}{r_a}\\
+%&= \dfrac{1}{298,25}
+%\end{align}
+%\begin{itemize}
+%	\item mittlerer Meeresspiegel der Weltmeere
+%	\item Schwerepotential an jedem Punkt der Geoidfläche gleich
+%	\item Wellenförmig: Massenüberschuss \glqq Beule\grqq\, Massendefizit \glqq Delle\grqq\
+%\end{itemize}
+%\begin{align}
+%w_0 = \SI{-6,264e7}{\square\meter\per\square\second}
+%\end{align}
+%\begin{itemize}
+%	\item Geoidundulation: Höhenunterschied zwischen Geoid und Referenzellipsoid
+%\end{itemize}
+%
+%\paragraph{Korrekturen der Gravimetriemessung}
+%\begin{enumerate}
+%	\item Breitenkorrektur: Berechnung Normalschwere für Breitengrad \begin{align}
+%	r_g &= g_0 ( 1+b \sin^2 \varphi - b' \sin^2(2\varphi))
+%	\intertext{mit:}
+%	g_0 &= 978049,00\;\mathrm{mGal}\\
+%	b &= 0,0052884\\
+%	b' &= 0,000059
+%	\end{align}
+%	\item Freiluftfaktor: $\delta g_F = - 0,3086 \cdot h [m] $
+%	\item Bouguerkorrektur: \begin{align}
+%	\delta g_B &= 0,0419 \cdot h[m] \cdot d_B
+%	\intertext{mit:}
+%	d_B &= 2,67 \frac{\mathrm{g}}{\mathrm{cm}^3}\\
+%	&= 0,11195 \cdot h[m]
+%	\end{align}
+%\end{enumerate}
+%
+%\subsection{Weitere Erläuterungen zu Common Midpoint}
+%Verschoben auf den nächsten Termin.
+%
+%$\rightarrow$ Siehe Abschnitt \ref{CMP}
+%
+%\section{Übungsaufgaben}
+%
+%\subsection{2.1 Tripelpunkte}\label{Tripel2}
+%Prüfe, ob folgende Tripelpunkte stabil sind. Verwende dafür das im Skript beschriebene geometrische Verfahren.
+%
+%$\rightarrow$ Notizen auf dem Zettel.
+%
+%\subsection{3.1 Geoid-Delle in der Erde}
+%Die Gleichgewichtsfigur der Erde wird Geoid genannt und ist eine Äquipotenzialfläche. Trotzdem hat das Geoid Mulden und Berge.
+%Wird ein Ball, der von einem Geoid-Berg in eine Geoid-Mulde rollt, beschleunigt? Begründe.
+%Warum ist die Schwerebeschleunigung g auf dem Geoid nicht konstant $(g = -gradW_g = -\Delta W_g )$?
+%
+%\paragraph{Lösung:}
+%Nein der Ball wird nicht beschleunigt.
+%
+%Die Schwerebeschleunigung ist nicht konstant, weil sich die Zentrifugalkraft ändert.
+%Die Zentrifugalkraft ist am Äquator am größten, deshalb breitengradabhängig.
+%
+%\chapter{6. Termin 05.06.15}
+%
+%\section{Begriffe und Formeln}
+%
+%\subsection{Seismische Spur}
+%Daten, die aufgezeichnet werden. Der \emph{Ausbreitungsverlust} hängt von der Geometrie ab und kann kleiner und größer als 1 sein.
+%
+%$\rightarrow$ Siehe auch Vanelle-Folien 13-19.
+%
+%\subsection{CMP (Common Midpoint Seismik)}\label{CMP}
+%Verschiedene Schusspunkte an der Oberfläche schießen auf ein gemeinsames Ziel. Mehrere Signale Treffen genau auf ein Objekt. Ankommende Signale werden zeitlich sortiert und danach die Ersteinsätze auf einen Anfangspunkt sortiert (\emph{Normal Move-Out (NMO))}. So werden die Signale der Reflexion verstärkt und Störgeräusche eliminiert.
+%
+%Erklärende Zeichnung zum NMO auf Zettel.
+%
+%\subsection{Deklination}
+%\textbf{Deklination:} Abweichung zwischen geografischem und magnetischem Nordpol.
+%
+%\subsection{Inklination}
+%\textbf{Inklination:} Winkel, in dem Magnetfeldlinien in die Erde einfallen. Er beträgt an den magnetischen Polen $90^\circ$ und am Äquator $0^\circ$.
+%
+%\subsection{Palaomagnetismus}
+%Beruht auf ferrimagnetischen Mineralien, die eine remanente Magnetisierung haben. Fällt das magnetisierende Feld weg, bleibt eine restliche Magnetisierung erhalten, diese heißt remanente Magnetisierung.
+%\paragraph{Beispiele für remanente Magnetisierung:}
+%\begin{enumerate}
+%	\item Thermoremanente Magnetisierung. Kühlt Lava aus, so richtet sich ihr Magnetfeld nach dem zu der Zeit vorherrschenden Erdmagnetfeld aus.
+%	\item Sedimentations - Magentisierung. Sedimentieren Stoffe über längere Zeit ungestört, so richtet sich ihr Magnetfeld nach dem Erdmagnetfeld aus.
+%\end{enumerate}
+%
+%\subsection{Äquipotentiallinien}
+%Stehen senkrecht zu den Feldlinien und sind bei einer punktförmigen Quelle kreisförmig um diese Quelle.
+%
+%\subsection{Geoelektrik allgemein}
+%Untersucht wird:
+%\begin{itemize}
+%	\item elektrische Leitfähigkeit
+%	\item spezifischer Widerstand
+%\end{itemize}
+%Dabei speist man in die Erde mit zwei Sonden Strom ein und misst den Spannungsabfall zwischen diesen beiden Sonden bzw. an anderen Messpunkten.
+%
+%\paragraph{Ohm'sche Gesetz}
+%\begin{align}
+%I &= \frac{1}{\rho} \cdot \frac{q}{l} \cdot U\\
+%&= \sigma \frac{q}{l} \cdot U
+%\end{align}
+%$\rho$ ist der spezifische Widerstand, $\sigma$ ist die Leitfähigkeit
+%
+%Man trifft Aussagen über Wasser-, Tongehalt des Gesteins und die Salinität des Porenwassers.
+%
+%\paragraph{Leitungsmechanismen}
+%\begin{enumerate}
+%	\item Elektronenleitung: Bewegung freier Elektronen im Leiter
+%	\item Elektrolytische Leitung: Bewegung positiv und negativ geladener Ionen im Fluid
+%	\item Dielektrische Leitung: Ladungsverschiebung im Wechselfeld
+%\end{enumerate}
+%
+%\subsection{Messanordnungen der Geoelektrik}
+%Generell geht es bei der Geoelektrik um \emph{sondieren} und \emph{kartieren}.
+%\begin{description}
+%	\item[Sondierung] vertikale Veränderung de spezifischen Widerstandes mithilfe der 
+%	\begin{itemize}
+%		\item Schlumberger Anordnung
+%		\item Dabei sind in der Mitte Messsonden, bezeichnet als M und N, die den Abstand a voneinander besitzen. Die äußeren Elektroden A und B haben den Abstand l voneinander. 
+%		\item Es gilt $l >> a $.
+%		\item Tiefensondierung: Die Sonden bleiben ortsfest und die Elektroden werden symmetrisch versetzt.
+%		\item Die Eindringtiefe der Stromlininen hängt von dem Elektrodenabstand ab.
+%	\end{itemize}
+%	\item[Kartierung] laterale Änderung des spez. Widerstand.
+%	\begin{itemize}
+%		\item Wenner-Anordnung: Im gleichbleibenden Abstand a befinden sich die Elektrode A, die Sonden M und N, und die zweite Elektrode B.
+%		\item der Abstand a bleibt immer gleich.
+%		\item Gleichstromkartierung: die gesamte Anordnung wird horizontal verschoben.
+%	\end{itemize}
+%\end{description}
+%
+%\paragraph{Schichten}
+%Diskussion über Brechung an Schichtgrenzen mit Widerstandsänderungen. Nächste Woche genaueres.
+%
+%\section{Übungsaufgaben}
+%
+%\subsection{5.1 Feld- und Potentiallinien}
+%Skizziere Feld- und Potentiallinien (in der Draufsicht)
+%\begin{description}
+%	\item[a) einer elektrisch positiven Punktladung]
+%		Die Feldlininen gehen als Strahlen senkrecht von der Punktladung weg, während die Potentiallinien kreisförmig um die Punktladung verlaufen.
+%	\item[b) zweier gleich großer elektrisch positiver Punktladungen mit Abstand d]
+%		Auf der jeweils von der anderen Ladung abgewandten Seite der Ladungen keine Änderung. Bei den zugewandten Seiten \glqq biegen\grqq\ sich die Feldlinien von der anderen Ladung weg und die Potentiallinien liegen enger beieinander und werden sozusagen \glqq abgeflacht\grqq.
+%\end{description}
+%
+%\subsection{5.2 Elektrische Widerstände in Gestein}
+%Wie groß sind die spezifischen Widerstände von Granit, Graphit, Eisen und Mineralwasser?
+%Was sind die jeweiligen Leitungsmechanismen?
+%\vspace{\baselineskip}
+%
+%\begin{tabular}{lll}
+%\textbf{Stoff} & \textbf{spezifischer Widerstand} & \textbf{Leitungsmechanismus}\\
+%Granit & $200-100000\;\Omega m$ & Elektrolytische Leitung\\
+%Graphit & $10-100\;\Omega m$ & Elektronenleitung\\
+%Eisen & & Elektronenleitung\\
+%Mineralwasser & & Elektrolytische Leitung
+%\end{tabular}
+%
+%\subsection{5.3 Norddeutsche Leitfähigkeitsanomalie}
+%Die sogenannte \glqq Norddeutsche Leitfähigkeitsanomalie\grqq\ erstreckt sich unterhalb des gesamten Norddeutschen Beckens in einer Tiefe zwischen 7-9 km (im Norden) und 5-7 km (im Süden). Was
+%könnten Ursachen für ihre bekannte, stark erhöhte Leitfähigkeit sein? Diskutieren Sie.
+%
+%\paragraph{These:}
+%Die Ursache dafür sind vermutlich Fluidfallen (Flüssigkeitsfallen), die sich unter einer wasserundurchlässigen Schicht, z.B. Ton, gebildet haben. Da Kohlenwasserstoffe im Allgemeinen nicht leitfähig sind, liegt nahe, dass es sich bei dem eingeschlossenen Fluid um Wasser handelt.
+%
+%\chapter{7. Termin 12.06.2015}
+%
+%\section{Begriffe und Formeln}
+%
+%\subsection{Geoelektrik}
+%
+%\paragraph{Widerstandsverteilungen}
+%\begin{itemize}
+%	\item Zum Lot hin gebrochen: Widerstand nimmt zu $(\rho_1 < \rho_2)$ $\rightarrow$ schlechter Leiter
+%	\item Vom Lot weg gebrochen: Widerstand nimmt ab $(\rho_1 > \rho_2$ $\rightarrow$ guter Leiter $\rightarrow$ geringe Eindringtiefe
+%\end{itemize}
+%
+%\paragraph{Maxwell-Gleichungen}
+%\begin{align}
+%\mathrm{rot}\ \vv{H} &= \dfrac{\mathrm{d}\vv{D}}{\mathrm{d}t} + \vv{j}
+%\intertext{$\vv{H}$: magnetische Erregung, $\vv{D}$: Verschiebungsdichte, $\vv{j}$: Stromdichte}
+%\mathrm{rot}\ \vv{E} &= - \dfrac{\mathrm{d}\vv{B}}{\mathrm{d}t}
+%\intertext{$\vv{E}$: elektrische Feldstärke, $\vv{B}$: magnetische Induktion}
+%\mathrm{div}\ \vv{D} &= \frac{q}{V}
+%\intertext{$\dfrac{q}{V}$: Ladungsdichte}
+%\mathrm{div}\ \vv{B} &= 0
+%\end{align}
+%\begin{itemize}
+%	\item 1,2) sich zeitlich änderndes elektrisches Feld erzeugt magnetisches Wirbelfeld, zeitlich änderndes Magnetfeld erzeugt elektrisches Wirbelfeld.
+%	\item 3) Quelle von $\vv{D}$ freie Ladungen
+%	\item 4) $\vv{B}$ nicht durch Ladungen erzeugt
+%\end{itemize}
+%
+%\paragraph{spezifischer Widerstand:}
+%\begin{align}\label{SpezR}
+%\rho &= \dfrac{R \cdot A}{x}
+%\end{align}
+%Mit R als Widerstand, A Fläche und x Länge
+%
+%\paragraph{Brechungsgesetz Gleichstromelektrik}
+%\begin{align}
+%\rho_1 \tan \Phi_1 &= \rho2 \tan \Phi_2
+%\end{align}
+%Mit jeweils $\rho$ als spezifischem Widerstand und $\Phi$ als Winkel zum Lot.
+%
+%\paragraph{Reichweite von Wellen}
+%Wenn der elektrische Widerstand zunimmt, nimmt die Geschwindigkeit ab.
+%
+%\subsection{Magnetotellurik}
+%\begin{itemize}
+%	\item Messung von natürlichen magnetischen und elektrischen Feldern, die zeitlich variieren und ihren Ursprung außerhelb der festen Erde in der Atmosphäre und Ionosphäre haben.
+%	\item kurzperiodische Fluktuationen induzieren elektrische Ströme in der Erde
+%	\item Untersuchung der Leitfähigkeit des Erdmantels
+%	\item Abschwächung: Skin Effekt
+%	\item Skin Tiefe: Abschwächung auf $\dfrac{1}{e}$
+%\end{itemize}
+%
+%\subsection{Georadar}
+%\begin{itemize}
+%	\item elektromagnetische Pulse entlang der Erdoberfläche
+%	\item von Inhomogenitäten reflektierte, gestreute Pulse werden registriert
+%	\item aus Laufzeit und Reflexionsstärke können Aussagen über Form und Tiefe der Inhomogenität getroffen werden
+%\end{itemize}
+%
+%\section{Übungaufgaben}
+%
+%\subsection{5.4 Geoelektrik im Halbraum}
+%Die Skizze stellt die Feldlinien (Stromlinien) zwischen einer positiven und einer negativen Elektrode
+%dar, die über einem geschichteten Halbraum (zwei Schichten) im Erdboden stecken.
+%\begin{description}
+%	\item[a) Zeichne Äquipotenzialflächen ein.]
+%	Die Äquipotenzialflächen liegen jeweils senkrecht zu den Feldlinien.
+%	\item[b) Beschreibe die Verteilung der Stromdichte j.]
+%	Die Stromdichte j ist in dort höher, wo die Feldlinien eng beieinander liegen.
+%	\item[c) Ist $\mathbf{\rho_2}$ größer oder kleiner als $\mathbf{\rho_1}$? Begründe.]
+%	Der Widerstand ist in der zweiten Schicht kleiner. Begründung z.b. über das Brechungsgesetz.
+%\end{description}
+%
+%\subsection{5.5 Ohm'sche Gesetz}
+%\begin{description}
+%	\item[a)]Um die Spannung einer Batterie zu ermitteln, wird ein Verbraucher mit bekanntem Widerstand ($R = 120\;\Omega =$ const.) angeschlossen. Ein ebenfalls angeschlossener Strommesser zeigt dabei eine Stromstärke von $I = 0,02\;\mathrm{A}$ an. Wie groß ist die Spannung der Batterie?
+%	\begin{align}
+%	U &= R \cdot I\\
+%	&= 120\;\Omega \cdot 0,02\;\mathrm{A}\\
+%	&= 2,4\;\mathrm{V}
+%	\end{align}
+%	\item[b)] Eine 100 m lange, kupferne Leitung zu den Sonden einer Geoelektrikapparatur soll höchstens einen Widerstand von $R = 0,5\;\Omega$ haben. Wie groß muß die Querschnittsfläche der Leitung mindestens sein ($\rho_{Cu} = 0,017\;\frac{\Omega\; \mathrm{mm}^2}{m}$)?
+%	\begin{align}
+%	\intertext{Nach Formel \ref{SpezR} gilt:}
+%	\rho &= \dfrac{R \cdot A}{x}\\	
+%	A &= \dfrac{\rho \cdot l}{R}\\
+%	A &= \dfrac{0,017\;\frac{\Omega\; \mathrm{mm}^2}{m} \cdot 100\;m}{0,5\;\Omega}\\
+%	A &= 3,4\;\mathrm{mm}^2
+%	\end{align}
+%\end{description}
+%
+%
+%\subsection{5.6 Effekt von leitfähigen Schichten}
+%Ziel von geoelektrischen Messungen ist es, Unterschiede in der Leitfähigkeit und damit Strukturen im Untergrund zu erkennen. Ist es dafür günstiger, an Regentagen mit einer nassen, gut leitfähigen Deckschicht geoelektrische Messungen durchzuführen oder an heißen Tagen, wenn der Boden ausgetrocknet ist?
+%
+%\paragraph{Antwort:}
+%Bei größerer Durchfeuchtung sinkt die Eindringtiefe, da in einem guten Leiter der Strom vom Lot weg gebrochen wird und hauptsächlich nahe der Oberfläche fließt. Somit können bei einer nassen Deckschicht kaum noch Messergebnisse aus den darunter liegenden Schichten gewonnen werden.
+%
+%\subsection{5.7 Schlumberger Sondierung}
+%Aufgabe zum zu Hause machen.
+%
+%\subsection{5.8 Pseudosektion}
+%
+%Aufgabe zum zu Hause machen.
+%
+%\chapter{8. Termin 19.06.2015}
+%Heute Georadar, nächster Termin Erdbeben, letzter Termin Klausurvorbereitung.
+%
+%\section{Begriffe und Formeln}
+%
+%\subsection{Georadar}
+%\begin{itemize}
+%	\item Laufzeit und Amplituden der elektrischen Feldstärke $E$ werden aufgezeichnet
+%	\item elektromagnetische Wellen werden beeinflusst von:
+%	\begin{itemize}
+%		\item Dielektrizitätskonstante $E_r$ (frequenzabhängig)
+%		\item magnetische Suszeptibilität $M_r$
+%		\item elektrische Leitfähigkeit $\sigma_e$
+%	\end{itemize}
+%	\item Snellius für elektromagnetische Wellen: 
+%	\begin{align}
+%	\tilde{k}_0 \sin \rho_0 = \tilde{k}_1 \sin \rho_1 = \tilde{k}_2 \sin \rho_2
+%	\end{align}
+%	$\tilde{k}$: Wellenzahl, allg. Komplex
+%	\item Aus der Krümmung der Diffraktionshyperbel  ist die Berechnung der Geschwindigkeit möglich.
+%\end{itemize}
+%
+%\subsection{Dämpfung}
+%\begin{itemize}
+%	\item Nichtleiter (z.B. Luft): EM Welle breitet sich ungedämpft aus
+%	\item Leiter (z.B. Metall): einfallende Welle stark gedämpft $\rightarrow$ in der Regel keine Reflexionen von Strukturen unterhalb solcher Materialien
+%	\item Dämpfung nimmt bei steigender Frequenz zu, aber bei höheren Frequenzen haben wir eine bessere Auflösung $\Rightarrow$ Kompromiss zwischen Eindringtiefe Auflösung
+%	\item Nyquist-Bedingung
+%	\begin{align}
+%		f_{\mathrm{Nyquist}} = \dfrac{1}{2} f_{\mathrm{Abtast}} \rightarrow f_{\mathrm{Signal}} < f_{\mathrm{Nyquist}}
+%		\intertext{Beispiel:} 
+%		f_{\mathrm{Signal}} = 25 \mathrm{Hz}; \Delta t = 10\;\mathrm{ms}, \Delta t = 50\;\mathrm{ms}
+%	\end{align}
+%	\begin{align}
+%		f_{\mathrm{Abtast}} &= \dfrac{1}{0,01\;\mathrm{s}}= 100\;\mathrm{Hz}\\
+%		\Rightarrow \dfrac{100\;\mathrm{Hz}}{2} &= 50\;\mathrm{Hz}\\
+%		f_{\mathrm{Abtast}} &= \dfrac{1}{0,05\;\mathrm{s}}= 20\;\mathrm{Hz}\\
+%		\Rightarrow \dfrac{20\;\mathrm{Hz}}{2} &= 10\;\mathrm{Hz}
+%		\intertext{Verfälschung:}
+%		f_\mu &= f_{\mathrm{Signal}} - f_{\mathrm{Nyquist}} = 15\;\mathrm{Hz}\\
+%		f_{\mathrm{Nyquist}} - f_\mu &= (-) 5\;\mathrm{Hz}
+%\end{align}	 
+%\end{itemize}
+%
+%\subsection{Seismologie}
+%Welche Informationen lassen sich aus einem Seismogramm herauslesen?
+%\begin{itemize}
+%	\item Richtung der Wellen (Polarisation)
+%	\item Stärke des Bebens (Unterschied der Stärke von Raum- und Oberflächenwellen)
+%	\item Tiefe des Bebens (Stärke der Oberflächenwellen)
+%	\item Zeit und Entfernung des Bebens (Laufzeitenunterschiede P-\&S-Wellen)	
+%\end{itemize}
+%
+%Welche Informationen aus Spektogramm?
+%\begin{itemize}
+%	\item starke Beben generieren tieffrequente Schwingungen (\textless 0,1 Hz)
+%	\item Noise meistens zwischen 0,1-0,4 Hz $\rightarrow$ Tiefpassfilter
+%\end{itemize}
+%
+%Was kann gemessen werden?
+%\begin{itemize}
+%	\item Verschiebung, Beschleunigung, Geschwindigkeit
+%\end{itemize}
+%
+%\subsection{Begriffe zu Erdbeben}
+%\begin{description}
+%	\item[Epizentrum:] Punkt auf der Erdoberfläche oberhalb der Erdbebenquelle
+%	\item[Hypozentrum:] Quelle 
+%	\item[Centroid:] Punkt der größten Verschiebung
+%	\item[seismische Lücke:] Ort an Plattengrenzen, bei dem es seit langer Zeit kein Ereignis mehr gab
+%	\item[Teleseismisches Beben:] Fernbeben mit über $1000$\;km Entfernung zum Aufnehmer
+%	\item[Epizentraldistanz:] Distanz auf dem Großkreis zwischen Epizentrum und Aufnehmer (kürzester Weg auf der Kugeloberfläche)
+%\end{description}
+%Magnitudenverringerung um 1 $\rightarrow$ 10 mal größere Häufigkeit, beispielsweise erwartet man im Zeitraum eines Bebens der Stärke 7, 10 der Stärke 6 und 100 der Stärke 5.
+%
+%\subsection{Tabelle zu Wellen}
+%\def\arraystretch{1.3}
+%\begin{tabulary}{0.98\textwidth}{|L|L|L|L|L|L|}
+%\hline 
+%& \textbf{Wellentyp} & \textbf{Seismogramm} & \textbf{Verlauf}& \textbf{Frequenz} & \textbf{Signal} \\ 
+%\hline 
+%Raum\-wel\-len & P-Welle & Vertikal\-kom\-po\-nente & bilden Schattenzone durch Ablenkung am Kern & Gut erkennbar bei $4$\;Hz Tiefpassfilter & Gut sichtbar auf vertikaler Achse \\ 
+%\cline{2-6}
+%& S-Welle & Hori\-zon\-tal\-kom\-po\-nen\-te & keine S-Welle im äußeren Kern & Gut erkennbar bei $0,2$\;Hz Tiefpassfilter & Gut sichtbar auf horizontaler Achse\\
+%\hline
+%Ober\-flächen\-wellen & Lovewelle & Hori\-zon\-tal\-kom\-po\-nen\-te & \multirow{4}{*}{\parbox{3cm}{\vspace{1.6mm}Existieren, wenn Hypozentrum flach ist oder es ein starkes Beben ist}} & \multirow{5}{*}{\parbox{3cm}{\vspace{1.6mm}Tieffrequenter als P-Welle; Tieffrequente Wellen kommen eher an, da sie tiefer laufen}}\hspace{3cm} & Erst Love-, dann Rayleigh-Welle\\
+%\cline{2-3}
+%& Ray\-leigh\-welle & Hori\-zon\-tal\-kom\-po\-nen\-te & & & \\
+%\hline 
+%\end{tabulary} 
+%
+%
+%\section{Übungsaufgaben}
+%Aufgaben 5.9 und 5.11 und 5.12 sollte man machen!
+%
+%\chapter{9. Termin 26.06.2015}
+%
+%\section{Begriffe und Formeln}
+%
+%\subsection{Erdbeben}
+%Bei Scherspannung von $45^\circ$ $\rightarrow$ Bruch am wahrscheinlichsten.
+%Die Geschwindigkeit von P-Wellen ist größer als doe von S-Wellen und wiederum größer als die von Oberflächenwellen.
+%
+%Geschwindigkeiten von P- und S-Wellen innerhalb der Erde im Diagramm auf Zettel und zumindest grundlegend für die Klausur wichtig.
+%
+%\paragraph{Mohr-Coulomb-Kriterium}
+%\begin{align}
+%|\tau| &=  \tau_0 - n \sigma_N
+%\intertext{$\tau_0$: Kohaesion, $n$ interner Reibungswinkel, $\sigma_N$: Normalspannung}
+%\rightarrow &\text{pr\"aexistente Bruchfl\"achen: }
+%|\tau | = - \mu \sigma_N
+%\end{align}
+%$\mu$: Reibungskoeffizient zwischen beiden Oberflächen
+%
+%
+%\paragraph{Bestimmung Herdzeit eines Bebens durch Wadati-Diagramm}
+%\begin{itemize}
+%\item Zeitdifferenz $t_s - t_p$ über Einsatzzeit $t_p$ für unterschiedliche Stationen
+%$\rightarrow$ wenn $ \dfrac{v_p}{v_s} =$ konst.$\rightarrow$ auf einer Geraden
+%\item Schichten mit konst. Geschwindigkeit:
+%\begin{align}\label{eq:entf}
+%t_s - t_p &= \left(\dfrac{v_p}{v_s}-1\right)\left(\dfrac{r}{v_p}\right) \text{, r: Abstand Hypozentrum zu Station}
+%\end{align}
+%\item Modalfläche: potentielle Bruchflächen
+%\item 3 Spannungstypen: Kompression, Extension, translatorische Spannung $\rightarrow$ 3 Erdbebentypen: Aufschiebung, Abschiebung, Blattverschiebung
+%\end{itemize}
+%
+%\paragraph{Beziehung für Häufigkeit von Erdbeben}innerhalb eines festen, längeren Zeitintervalls, für gegebene seismische Region:
+%\begin{align}
+%\log N_c &= a_1 - b M_S
+%\intertext{$N_c$ Zahl der Beben $\geq M_S$, $a_1$: stark varrierende Konstante, $b \approx 1$}
+%\Rightarrow M_S &= 8 \rightarrow 10 \cdot M_S = 7 \rightarrow 100 \cdot M_s = 6
+%\end{align}
+%
+%\paragraph{Geometric Spreading:} Abschwächung der Intensität mit zunehmender Entfernung \\
+%$\rightarrow$ allerdings existieren Orte mit großer Intensität trotz weiter Entfernung\\
+%$\Rightarrow$ mächtiges, weiches Sediment mit geringer Geschwindigkeit\\
+%$\rightarrow$ schnelle Welle: große Amplituden
+%
+%\paragraph{Mohrkreise}
+%\begin{align}
+%\sigma_1 &= -3\;\mathrm{MPa,}\sigma_2 = -1\;\mathrm{MPa}\\
+%\sigma &= \dfrac{(\sigma_1+\sigma_2}{2}+ \dfrac{\sigma_1-\sigma_2}{2}\cdot \cos (2 \theta)\\
+%\tau &= \dfrac{\sigma_1-\sigma_2}{2}\cdot \sin (2\theta)
+%\end{align}
+%
+%Diagramme zu Normalspannung und Scherspannung auf Zettel, wichtigste Punkte sind, dass die Normalspannung ihr Minimum von $\sigma_1$ bei $0^\circ$ und $180^\circ$ hat, das Maximum $\sigma_2$ liegt bei $90^\circ$. Die Scherspannung schwankt um den Mittelwert $\tau_0$, welcher bei $0^\circ$, $90^\circ$ und $180^\circ$ erreicht wird, das Maximum liegt bei $45^\circ$ und berechnet sich als $\dfrac{(\sigma_2-\sigma_1)}{2}$ und das Minimum liegt bei $135^\circ$ und beträgt $\dfrac{-(\sigma_2-\sigma_1)}{2}$.
+%
+%Übungsrechnung zu Mohrkreisen mit $\tau_0 = 0,5\;\mathrm{MPa}$ und $n=0,6$. Bei einem Mohrkreis mit den Punkten $\{(-1,0)(-2,-1)(-3,0)(-2,1)\}$ folgt, dass kein neuer Bruch entsteht, aber bei einem präexistenten Bruch erneut ein Erdbeben entstehen würde, da die Tangente innerhalb des Mohrkreises liegt.
+%
+%\section{Übungsaufgaben}
+%Auf verteilten Zetteln waren mehrere Aufgaben. Behandelt wurde \glqq Lokalbebenauswertung - wer war's?\grqq\ wo man anhand der Differenz der Ankunftszeit von P- und S-Welle mit Formel \ref{eq:entf} die Entfernung des Bebens ausrechnet und durch die positiven Erstausschläge der N- und E Komponente schlussfolgert, dass das Beben im Nordosten liegt. Beim ursprünglichen Geschwindigkeitsmodell ergibt sich eine Entfernung von $3,5\;\mathrm{km}$, sodass B schuld ist, mit dem anderen Geschwindigkeitsmodell ergibt sich eine Entfernung von $5,4\;\mathrm{km}$, sodass C schuld ist.
+%
+%\section{Nachtrag zu mehreren Fragen}
+%Auf den nächsten beiden Seiten.
+%
+%\chapter{10. Termin 04.07.2015}
+%
+%Klausurvorbereitung
+%
+%\section{Beantwortung von Fragen}
+%\paragraph{Ist die astronomische Breite eindeutig?}
+%Siehe Folie 13 in L3-Lecture-earth-shape. Geoid bestimmt sich aus der Masse, 
+%
+%\paragraph{Polumkehrung}
+%Skript Plattentektonik Folie 13.
+%
+%\paragraph{Slowness}
+%$ S = \frac{1}{v}$, besser in der Seismologie geeignet.
+%
+%\paragraph{MMCI}
+%Multi-measured-constraint imaging(MMCI), aus Hübscher Teil, Verbindung von WAZ und CSEM (Magnetotellurik)
+%
+%\paragraph{Target}
+%Ziel der Messung im Untergrund. Davon abhängig wird eine veränderte Quelle genutzt, z.B. tiefer eindringende Frequenzen
+%
+%\paragraph{Horizontale Auflösung}
+%Auflösung in der horizontalen. Bei einem gewellten Untergrund führt eine verbesserte Auflösung zum besseren erkennen von Wellenstrukturen. Lambda Viertel als Wert dazu merken.
+%
+%\section{Vorlesung Zusammenfassung}
+%\subsection{Hort-Teil}
+%\begin{itemize}[itemsep=0pt]
+%\item Entstehung Universum 13,58 Mrd. Jahre
+%\item Nach Urknall: 72\% Wasserstoff, 28\% Helium
+%\item Hertzsprung-Russel Diagramm kennen
+%\item Ptolemäus (~82-150 AD): Erde im Zentrum
+%\item Kopernicus (1473-1543): Sonne im Zentrum
+%\item $1 \mathrm{AU} = 1,496 \cdot 10^8 \mathrm{km}$
+%\item Titius-Bode-Gesetz: $r_n = r_0 \cdot A^n$
+%\item Meteoritentypen Stein, Stein-Eisen, Eisen
+%\item Abplattung der Erde: $f = \frac{a-b}{a} = 1 - \frac{b}{a}$
+%\item Feste Kruste, plastischen Mantel, flüssigen äußeren Erdkern, fester innerer Erdkern
+%\item Alfred Wegener
+%\item Paleomagnetismus, Ausrichtung der magnetischen Stoffe anhand des aktuell vorherrschenden Magnetfeldes
+%\item Zyklus der Plattentektonik: Wilson-Zyklus
+%\end{itemize}
+%
+%\subsection{Seismik}
+%\begin{itemize}[itemsep=0pt]
+%\item Snellius: $\frac{\sin \varphi}{v_1} = \frac{\sin \varphi}{v_2}$
+%\item Multiple im Seismogramm durch Migration entfernen.
+%\item Refraktionsseismik
+%\item optimale Dämpfung bei der Seismik 0,7
+%\item Normal Move Out: Laufzeitunterschied zu $t_0$
+%\item Korrekturformel bei Gravimetrie:
+%\vspace{-5mm}
+%\begin{align}
+%\intertext{Breitenkorrektur:}
+%g &= g_0 (1 + b \sin^2 \varphi - b' \sin^2(2\varphi))
+%\intertext{Freiluftkorrektur}
+%dg_F &= -0,3086 \cdot h
+%\intertext{Bouguerreduktion}
+%dg_B &= 0,11195 \cdot h = 0,04193 \cdot h \cdot dB
+%\end{align}
+%\item CMP
+%\end{itemize}
+%
+%\subsection{Magnetik}
+%Inklination und Deklination
+%
+%\subsection{Geoelektrik}
+%Schlumberger und Wenner als wichtige Verfahren, Unterschied Sondierung in die Tiefe, Kartierung in die Breite\\
+%Brechung vom/zum Lot, bei änderndem Widerstand
+%
+%\subsection{Georadar}
+%Verzerrter Einfallswinkel\\
+%Diffraktionshyperbeln, Inhomogenitäten reflektieren die elektromagnetischen Wellen
+%
+%\subsection{Erdbeben}
+%Z-Komponente negativ heißt normale Interpretation der Horizontalen Diagramme, bei positiv entsprechend die Himmelsrichtungen umdrehen.
+
+
+\chapter*{Infos}
+\begin{itemize}
+\item blubb fillout \url{1hamann@informatik.uni-hamburg.de}
+\end{itemize}
+
+
+
+
+
+%\chapter{Mailto:}
+%\begin{verbatim}
+
+%
+%\end{verbatim}
+
+\end{document}
