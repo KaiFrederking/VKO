@@ -18,7 +18,7 @@
 \begin{tabular}{llr}
 Malte Hamann & 6318952 &1hamann@informatik.uni-hamburg.de
 \\ Evelyn Fischer & 0000000 & 3fischer@informatik.uni-hamburg.de
-\\ Marco Jendryczko & 0000000 & 5jendryc@informatik.uni-hamburg.de
+\\ Marco Jendryczko & 6330073 & 5jendryc@informatik.uni-hamburg.de
 \\ Kai Frederking & 0000000 & 1frederk@informatik.uni-hamburg.de
 \end{tabular}
 }
@@ -44,8 +44,13 @@ Malte Hamann & 6318952 &1hamann@informatik.uni-hamburg.de
 	\begin{enumerate}
 	\item Als bekannt setzen wir voraus, dass 3D-Matching ein NP-vollständiges Problem ist. Entsprechend zu 3D-MATCHING definiert man $k$D-MATCHING für $k \geq 2$. Formulieren Sie das Problem 4D-MATCHING und zeigen Sie, dass 4D-MATCHING ein NP-vollständiges Problem ist.
 	
-	\loesung{hier dann die Antwort einfügen}
+	\loesung{4D-Matching:
+	\ein{Disjunkte Mengen $A$, $B$, $C$ und $D$ mit $|A| = |B| = |C| = |D| = n$ sowie eine Menge $T \subseteq A \times B \times C \times D$ von Tupeln}
 	
+	\fra{Gibt es eine Menge von $n$ Tupeln in T, so dass jedes Element aus $A \cup B \cup C \cup D$ in genau einem dieser Tupel vorkommt.}
+	4D-Matching in NP: 
+	4d-Matching ist NP-schwer:
+					}
 	\item Für jedes feste $k \geq 2$ definieren wir das Problem $k$-CLIQUE wie folgt:
 	\prob{k-CLIQUE}
 	\ein{Ein Graph $G = (V,E)$.}
@@ -54,7 +59,14 @@ Malte Hamann & 6318952 &1hamann@informatik.uni-hamburg.de
 	
 	\textbf{Hinweis:} Zur Lösung von Aufgabe 1 reicht es natürlich nicht, Antworten ohne Begründung zu geben; es kommt darauf an, Antworten zu geben \emph{und deren Richtigkeit nachzuweisen.}
 	
-	\loesung{hier dann die Antwort einfügen}
+	\loesung{k = 2 ist trivial, weil mindestens zwei Knoten in $G$ sein müssen und mindestens eine Kante. Sofern diese nicht reflexiv ist hat man automatisch eine 2-CLIQUE. \\
+Grundsätzlich kann man immer auf folgende Eigenschaften prüfen um festzustellen ob überhaupt eine $k$-CLIQUE möglich ist:
+					\begin{enumerate}
+						\item $|V| \geq k$
+						\item $|E| \geq (\sum_{i=1}^{k-1} k-i)$
+					\end{enumerate}
+	%Ich vermute mal, dass es ab k=3 NP-vollständig ist, weil man dann nicht mehr einfach nur eine Kante zwischen zwei beliebigen Knoten brauch, sondern quasi eine SCC mit 3-Knoten.
+					}
 	\end{enumerate}
 
 \item Gegeben sei eine Menge $A = \{a_1,\ldots,a_n\}$ sowie eine Kollektion $B_1,\ldots,B_m$ von Teilmengen von $A$. Eine Menge $H \subseteq A$ wird \emph{Hitting Set} für $B_1,\ldots,B_m$ genannt, falls $H \cap B_i \neq \emptyset$ für alle $i \in \{1,\ldots,m\}$ gilt. Wir betrachten das folgende Entscheidungsproblem:
