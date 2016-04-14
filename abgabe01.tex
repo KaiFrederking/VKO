@@ -19,7 +19,7 @@
 Malte Hamann & 6318952 &1hamann@informatik.uni-hamburg.de
 \\ Evelyn Fischer & 0000000 & 3fischer@informatik.uni-hamburg.de
 \\ Marco Jendryczko & 6330073 & 5jendryc@informatik.uni-hamburg.de
-\\ Kai Frederking & 0000000 & 1frederk@informatik.uni-hamburg.de
+\\ Kai Frederking & 6322593 & 1frederk@informatik.uni-hamburg.de
 \end{tabular}
 }
 \title{Übungen Vertiefung Kombinatorische Optimierung Sommersemester 2016\\\vspace{\baselineskip}\large Gruppe 2, Mo 10-12, Abgabe Blatt 01 \\Übungsleiter: \url{daniel.weissauer@uni-hamburg.de}}
@@ -48,8 +48,22 @@ Malte Hamann & 6318952 &1hamann@informatik.uni-hamburg.de
 	\ein{Disjunkte Mengen $A$, $B$, $C$ und $D$ mit $|A| = |B| = |C| = |D| = n$ sowie eine Menge $T \subseteq A \times B \times C \times D$ von Tupeln}
 	
 	\fra{Gibt es eine Menge von $n$ Tupeln in T, so dass jedes Element aus $A \cup B \cup C \cup D$ in genau einem dieser Tupel vorkommt.}
-	4D-Matching in NP: 
-	4d-Matching ist NP-schwer:
+	Zu zeigen: 1. 4D-Matching liegt in NP:\\
+	Als Zertifikat gegeben sei ein 4-D Matching $T' \subseteq A \times B \times C \times D$.
+	Zu prüfen ist:\\
+	$T' \subseteq T$ (möglich in polynomieller Zeit) \\
+	$T'$ enthält alle Elemente von $A \cup B \cup C \cup D$:\\
+	Hierzu prüfen wir, ob $|T'| = n$ ($T'$ muss genau n Tupel enthalten, um die Bedingung erfüllen zu können)\\
+	Dann sortieren wir alle Elemente der Tupel in ihrer jeweiligen Dimension aufsteigend ($O(n \cdot \log n)$), durchlaufen alle Dimensionen (4n Aufwand) und prüfen auf doppelt vorkommende Elemente. Finden wir keine, so hält das Zertifikat.\\
+	
+		
+	4d-Matching ist NP-schwer:\\
+	Um dies zu zeigen, reduzieren wir 3D-Matching auf 4D-Matching:\\
+	Gegeben sei eine Instanz I von 3D-Matching, $I \subseteq A \times B \times C$. Wir konstruieren die dazu gehörige Instanz I' von 4D-Matching, indem wir alle C-Elemene der Tripel als D-Elemente der Quadrupel kopieren.\\
+	Behauptung: Die kontruierte Instanz I' besitzt ein 4D-Matching, g.d.w. I ein 3D-Matching besitzt.\\
+	``$\Rightarrow$'': Da für ein 4-D Matching alle A-, B- und C-Elemente genau einmal enthalten sein müssen (ebenso wie die D-Elemente), folgt das 3D-Matching von I aus dem 4D-Matching von I'.\\
+	``$\Leftarrow$'': Folgt aus der Konstruktion. Wenn alle C-Elemente genau einmal enthalten sind (notwendige Bedingung des 3D-Matching von I), so sind es wegen der Duplizierung auch die D-Elemente von I'.\\ \\
+	
 					}
 	\item Für jedes feste $k \geq 2$ definieren wir das Problem $k$-CLIQUE wie folgt:
 	\prob{k-CLIQUE}
@@ -59,14 +73,18 @@ Malte Hamann & 6318952 &1hamann@informatik.uni-hamburg.de
 	
 	\textbf{Hinweis:} Zur Lösung von Aufgabe 1 reicht es natürlich nicht, Antworten ohne Begründung zu geben; es kommt darauf an, Antworten zu geben \emph{und deren Richtigkeit nachzuweisen.}
 	
-	\loesung{k = 2 ist trivial, weil mindestens zwei Knoten in $G$ sein müssen und mindestens eine Kante. Sofern diese nicht reflexiv ist hat man automatisch eine 2-CLIQUE. \\
-Grundsätzlich kann man immer auf folgende Eigenschaften prüfen um festzustellen ob überhaupt eine $k$-CLIQUE möglich ist:
-					\begin{enumerate}
-						\item $|V| \geq k$
-						\item $|E| \geq (\sum_{i=1}^{k-1} k-i)$
-					\end{enumerate}
+	\loesung{Für kein festes k. Solange k fest ist, ist das Problem in P (wenn auch mit teils großen Exponenten). Lediglich für beliebige, nicht-feste k ist das Clique-Problem in NP (und dann NP-vollständig, wie von Karp gezeigt).\\ \\
+	Beweis durch Induktion über die Cliquengröße k:
+	Für $k = 1$ ist die 1-Clique = V und der Aufwand der Ermittlung $O(n)$, $n = |V|$\\
+	Gegeben seien alle k-Cliquen eines Graphen G als lineare Listen der zur jeweiligen Clique gehörigen Knoten. Die Menge der Cliquen sei disjunkt (keine Clique kommt mehr als einmal vor), die Knotenmenge zweier Cliquen kann allerdings nichtleere Schnitte haben (ein Knoten gehört zu verschiedenen Cliquen).\\
+	Es kann höchstens $n \choose k$ solcher Cliquen geben, mit ${n \choose k} \leq n^k$.\\
+	Zur Ermittlung aller k+1-Cliquen durchlaufen wir jetzt alle k-Cliquen C (höchstens $n^k$), betrachten alle Knoten $v \in V \setminus C$, also die aus V, die noch nicht in C enthalten sind (höchstens n), durchlaufen deren Adjazenzlisten (höchstens n lang) und prüfen, ob alle ihre Elemente in C liegen (höchstens n Vergleiche). Ist dies der Fall, so ist $C \cup \{v\}$ eine k+1-Clique. Andernfalls nicht. Der Aufwand insgesamt ist höchstens $n^k \cdot n \cdot n \cdot n = n^{k+3}$. Hierzu kommt noch die Prüfung, ob eine neu gefundene k+1-Clique bereits auf anderem Wege gefunden wurde, das ändert aber $O(n^{k+3})$ nicht.\\
+	Um auf diese Weise alle k-Cliquen eines Graphen iterativ von den 1-Cliquen an zu ermitteln, benötigen wir höchstens\\
+	$n \cdot \sum_{i=2}^k n^{i-1+3} = n \cdot \sum_{i=2}^k n^{i+2} \leq n \cdot n^{k+3} = n^{k+4}$\\
+	und somit polynomielle Zeit.\\ \\
+	}
 	%Ich vermute mal, dass es ab k=3 NP-vollständig ist, weil man dann nicht mehr einfach nur eine Kante zwischen zwei beliebigen Knoten brauch, sondern quasi eine SCC mit 3-Knoten.
-					}
+	%Antwort Kai: Nicht ganz ... siehe oben.				}
 	\end{enumerate}
 
 \item Gegeben sei eine Menge $A = \{a_1,\ldots,a_n\}$ sowie eine Kollektion $B_1,\ldots,B_m$ von Teilmengen von $A$. Eine Menge $H \subseteq A$ wird \emph{Hitting Set} für $B_1,\ldots,B_m$ genannt, falls $H \cap B_i \neq \emptyset$ für alle $i \in \{1,\ldots,m\}$ gilt. Wir betrachten das folgende Entscheidungsproblem:
