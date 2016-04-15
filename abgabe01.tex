@@ -48,16 +48,17 @@ Malte Hamann & 6318952 &1hamann@informatik.uni-hamburg.de
 	\ein{Disjunkte Mengen $A$, $B$, $C$ und $D$ mit $|A| = |B| = |C| = |D| = n$ sowie eine Menge $T \subseteq A \times B \times C \times D$ von Tupeln}
 	
 	\fra{Gibt es eine Menge von $n$ Tupeln in T, so dass jedes Element aus $A \cup B \cup C \cup D$ in genau einem dieser Tupel vorkommt.}
-	Zu zeigen: 1. 4D-Matching liegt in NP:\\
+	Zu zeigen:\\
+	1. 4D-Matching liegt in NP:\\
 	Als Zertifikat gegeben sei ein 4-D Matching $T' \subseteq A \times B \times C \times D$.
 	Zu prüfen ist:\\
 	$T' \subseteq T$ (möglich in polynomieller Zeit) \\
-	$T'$ enthält alle Elemente von $A \cup B \cup C \cup D$:\\
+	$T'$ enthält alle Elemente von $A \cup B \cup C \cup D$ genau ein Mal:\\
 	Hierzu prüfen wir, ob $|T'| = n$ ($T'$ muss genau n Tupel enthalten, um die Bedingung erfüllen zu können)\\
 	Dann sortieren wir alle Elemente der Tupel in ihrer jeweiligen Dimension aufsteigend ($O(n \cdot \log n)$), durchlaufen alle Dimensionen (4n Aufwand) und prüfen auf doppelt vorkommende Elemente. Finden wir keine, so hält das Zertifikat.\\
 	
 		
-	4d-Matching ist NP-schwer:\\
+	2. 4d-Matching ist NP-schwer:\\
 	Um dies zu zeigen, reduzieren wir 3D-Matching auf 4D-Matching:\\
 	Gegeben sei eine Instanz I von 3D-Matching, $I \subseteq A \times B \times C$. Wir konstruieren die dazu gehörige Instanz I' von 4D-Matching, indem wir alle C-Elemene der Tripel als D-Elemente der Quadrupel kopieren.\\
 	Behauptung: Die konstruierte Instanz I' besitzt ein 4D-Matching, g.d.w. I ein 3D-Matching besitzt.\\
@@ -98,9 +99,9 @@ Malte Hamann & 6318952 &1hamann@informatik.uni-hamburg.de
 	\loesung{
 	HITTING SET liegt in NP, da bei Vorlegen des Zertifikats H in polynomieller Zeit geprüft werden kann, ob H aus jeder Menge $B_1$ ... $B_m$ mindestens ein Element enthält und selber höchstens k Elemente enthält.\\  \\
 	Die Reduktion von 3-SAT auf HITTING SET gelingt folgendermaßen:\\
-	Zu einer gegebenen Instanz $\Phi$ von 3-SAT konstruieren wir ein HITTING SET Problem $\Phi'$, so dass A die Menge der Literale enthält, sowie deren Negationen. Die Teilmengen B repräsentieren die Klauseln und enthalten je drei Literale, bzw. negierte Literale. Zusätzlich nehmen wir in B noch für jeden Literal eine 2-elementige Teilmenge auf, die diesen Literal und seine Negation enthält. So stellen wir sicher, dass H jeden Literal oder seine Negation enthalten muss. Wenn wir die Größe von H jetzt noch auf |A| / 2 beschränken (indem wir $k = |A| / 2$ wählen), so enthält H bei ``erfolgreichem HIT'' jeden Literal entweder negiert oder nicht negiert.\\ \\
+	Zu einer gegebenen Instanz $\Phi$ von 3-SAT konstruieren wir ein HITTING SET Problem $\Phi'$, so dass A die Menge der Literale enthält, sowie deren Negationen. Die Teilmengen B repräsentieren die Klauseln und enthalten je drei Literale, bzw. negierte Literale. Zusätzlich nehmen wir in B noch für jeden Literal eine 2-elementige Teilmenge auf, die diesen Literal und seine Negation enthält. So stellen wir sicher, dass H jeden Literal oder seine Negation enthalten muss. Wenn wir die Größe von H jetzt noch auf $|A| / 2$ beschränken (indem wir $k = |A| / 2$ wählen), so enthält H bei ``erfolgreichem HIT'' jeden Literal entweder negiert oder nicht negiert.\\ \\
 	Behauptung: Die konstruierte Instanz $\Phi'$ besitzt einen k-HITTING SET ($k = |A| / 2$), g.d.w. $\Phi$ eine erfüllende Eingabe besitzt.\\
-	``$\Rightarrow$'': Der HITTING SET H enthält keine widersprüchlichen Literale (s.o.). Er enthält mindestens ein Element (negiert oder nicht) aus jeder Klausel, so dass wenn alle Elemente aus H auf wahr gesetzt werden, alle Klauseln erfüllt sind.
+	``$\Rightarrow$'': Der HITTING SET H enthält keine widersprüchlichen Literale (s.o.). Er enthält mindestens ein Element (negiert oder nicht) aus jeder Klausel, so dass wenn alle Elemente aus H auf wahr gesetzt werden, alle Klauseln erfüllt sind.\\
 	``$\Leftarrow$'': Existiert eine erfüllende Belegung, so gehört aus den zweielementigen Teilmengen jeweils die erfüllende Belegung des Literals zu H und jede Klausel enthält von diesen Belegungen mindestens eine, so dass H auch Elemente aus allen Klauseln enthält.\\
 	
 	}
